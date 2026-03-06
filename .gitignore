@@ -1,0 +1,19 @@
+# Environment
+.env
+
+# Runtime data
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Editor
+.idea/
+.vscode/
+*.swp
+.DS_Store

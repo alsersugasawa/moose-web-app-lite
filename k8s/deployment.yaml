@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moose
+  namespace: moose
+  labels:
+    app: moose
+spec:
+  # SQLite requires a single writer — keep replicas at 1.
+  # To scale horizontally, migrate DATABASE_URL to PostgreSQL.
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moose
+  strategy:
+    type: Recreate   # avoids two pods mounting the same RWO volume simultaneously
+  template:
+    metadata:
+      labels:
+        app: moose
+    spec:
+      containers:
+        - name: web
+          # For local clusters (minikube/kind) use the locally built image.
+          # For remote clusters, replace with a registry path, e.g.:
+          #   image: ghcr.io/<your-org>/moose-web-app-lite:latest
+          image: moose-web-app-lite:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: moose-config
+            - secretRef:
+                name: moose-secret
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: moose-data

@@ -1,0 +1,31 @@
+# Requires an ingress controller (e.g. ingress-nginx).
+# minikube:  minikube addons enable ingress
+# kind:      https://kind.sigs.k8s.io/docs/user/ingress/
+#
+# For HTTPS, add a TLS block and point to a cert-manager Certificate or
+# an existing TLS secret.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: moose
+  namespace: moose
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+spec:
+  rules:
+    - host: moose.local   # change to your actual hostname
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: moose
+                port:
+                  number: 80
+  # Uncomment to enable TLS:
+  # tls:
+  #   - hosts:
+  #       - moose.local
+  #     secretName: moose-tls
