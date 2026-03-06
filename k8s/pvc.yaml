@@ -1,0 +1,14 @@
+# SQLite database storage.
+# ReadWriteOnce means only one node can mount this at a time,
+# which aligns with keeping the Deployment at replicas: 1.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: moose-data
+  namespace: moose
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

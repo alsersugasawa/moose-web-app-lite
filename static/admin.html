@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Moose App</title>
+  <link rel="stylesheet" href="/static/admin-styles.css" />
+</head>
+<body>
+
+<!-- Not authenticated overlay -->
+<div id="notAuth" class="auth-wrapper" style="display:none">
+  <div class="auth-card">
+    <a href="/static/index.html" class="logo">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="7" fill="#4f46e5"/><path d="M8 20V10l6 6 6-6v10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Moose
+    </a>
+    <div class="alert alert-error visible" id="notAuthMsg">You need admin access to view this page.</div>
+    <a href="/static/index.html" class="btn btn-primary btn-full">Go to app</a>
+  </div>
+</div>
+
+<!-- Admin Layout -->
+<div id="adminLayout" class="admin-layout" style="display:none">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="/static/index.html" class="logo">
+      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="7" fill="#4f46e5"/><path d="M8 20V10l6 6 6-6v10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Moose Admin
+    </a>
+    <nav class="sidebar-nav">
+      <a href="#" class="active" data-section="overview">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        Overview
+      </a>
+      <a href="#" data-section="users">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        Users
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn btn-ghost btn-sm btn-full" id="logoutBtn">Sign out</button>
+    </div>
+  </aside>
+
+  <!-- Content -->
+  <main class="admin-content">
+    <div class="alert" id="adminAlert"></div>
+
+    <!-- Overview -->
+    <div id="overviewSection">
+      <h1>Overview</h1>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total users</div>
+          <div class="stat-value" id="statTotal">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Active users</div>
+          <div class="stat-value" id="statActive">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Admins</div>
+          <div class="stat-value" id="statAdmins">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">New today</div>
+          <div class="stat-value" id="statToday">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Users -->
+    <div id="usersSection" style="display:none">
+      <h1>Users</h1>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Role</th>
+              <th>Joined</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-muted)">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Confirm modal -->
+<div class="modal-backdrop" id="confirmModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="confirmTitle">Confirm action</h3>
+      <button class="btn btn-ghost btn-sm" id="confirmClose">✕</button>
+    </div>
+    <p id="confirmMsg" style="margin:0 0 1.25rem;color:var(--text-muted);font-size:.9rem"></p>
+    <div style="display:flex;gap:.75rem;justify-content:flex-end">
+      <button class="btn btn-outline" id="confirmCancel">Cancel</button>
+      <button class="btn btn-danger" id="confirmOk">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script src="/static/admin.js"></script>
+</body>
+</html>
