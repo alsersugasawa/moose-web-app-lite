@@ -1,6 +1,6 @@
 # moose-web-app-lite
 
-A lightweight version of [moose-web-app-template](https://github.com/alsersugasawa/moose-web-app-template) — stripped down to the essentials with zero external service dependencies.
+A light-weight version of [moose-web-app-template](https://github.com/alsersugasawa/moose-web-app-template) — stripped down to the essentials with zero external service dependencies.
 
 ## What's included
 
