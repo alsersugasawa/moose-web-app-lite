@@ -1,2 +1,2 @@
 # moose-web-app-lite
-Lightweight web-app template
+Light-weight web-app template
